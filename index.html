@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionnaire - ZeroTouch Metrology</title>
+
   <style>
     body {
       margin: 0;
@@ -18,7 +19,6 @@
       padding: 20px;
     }
 
-    /* Titre principal */
     #titre {
       font-size: 28px;
       font-weight: bold;
@@ -27,7 +27,6 @@
       text-align: center;
     }
 
-    /* Conteneur du formulaire */
     #container {
       position: relative;
       width: 100%;
@@ -36,6 +35,7 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: opacity 0.5s;
     }
 
     iframe {
@@ -44,7 +44,6 @@
       border: none;
     }
 
-    /* Bouton Envoyer */
     #overlay {
       margin-top: 20px;
       background-color: #0078d7;
@@ -62,7 +61,13 @@
       transform: translateY(-2px);
     }
 
-    /* Message de remerciement */
+    #instructions {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+      transition: opacity 0.5s;
+    }
+
     #message {
       display: none;
       text-align: center;
@@ -85,7 +90,6 @@
       to {opacity: 1;}
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       #container {
         height: 60vh;
@@ -101,18 +105,18 @@
   </style>
 </head>
 <body>
-  <!-- Titre à la place du logo -->
+
   <div id="titre">Questionnaire ZeroTouch Metrology</div>
 
-  <!-- Conteneur du formulaire -->
   <div id="container">
     <iframe src="https://forms.office.com/e/qr6QNdau8F?origin=lprLink" id="formulaire"></iframe>
   </div>
 
-  <!-- Bouton Envoyer -->
+  <!-- Phrase à masquer -->
+  <h2 id="instructions">Pour recevoir votre nuage 3D, connectez-vous à notre compte LinkedIn et envoyez-nous un message privé !</h2>
+
   <div id="overlay">Envoyer</div>
 
-  <!-- Message de remerciement avec logo -->
   <div id="message">
     <img src="logo-ztm.png" alt="Logo ZeroTouch">
     <h2>Merci d’avoir répondu !</h2>
@@ -122,15 +126,23 @@
   <script>
     const overlay = document.getElementById('overlay');
     const container = document.getElementById('container');
+    const instructions = document.getElementById('instructions');
     const message = document.getElementById('message');
 
     overlay.addEventListener('click', () => {
-      // Masque le formulaire et le bouton
-      container.style.display = 'none';
-      overlay.style.display = 'none';
 
-      // Affiche le message de remerciement
-      message.style.display = 'block';
+      // Fade-out de l'interface
+      container.style.opacity = 0;
+      overlay.style.opacity = 0;
+      instructions.style.opacity = 0;
+
+      setTimeout(() => {
+        container.style.display = 'none';
+        overlay.style.display = 'none';
+        instructions.style.display = 'none';
+
+        message.style.display = 'block';
+      }, 500);
 
       // Redirection après 2 secondes
       setTimeout(() => {
@@ -138,5 +150,6 @@
       }, 2000);
     });
   </script>
+
 </body>
 </html>
